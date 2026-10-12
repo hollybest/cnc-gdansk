@@ -21,6 +21,30 @@
   {"@context":"https://schema.org","@type":"LocalBusiness","name":"CNC Gdańsk","description":"Frezowanie i cięcie CNC, pole robocze 2100 × 4200 mm.","url":"https://cncmegaformat.pl/","telephone":"+48577222845","email":"kontakt@softstudiopl.eu","image":"https://cncmegaformat.pl/images/warsztat-frezarka.webp","address":{"@type":"PostalAddress","addressLocality":"Tuchom","postalCode":"80-209","addressRegion":"pomorskie","addressCountry":"PL"},"areaServed":["Gdańsk","Gdynia","Sopot","województwo pomorskie"]}
   </script>
 
+  <!-- Google tag + Consent Mode v2. Wpisz swój identyfikator GA4 w GA_ID. -->
+  <script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('consent', 'default', {
+    ad_storage: 'denied', ad_user_data: 'denied', ad_personalization: 'denied',
+    analytics_storage: 'denied', wait_for_update: 500
+  });
+  try {
+    if (localStorage.getItem('cnc_consent') === 'granted') {
+      gtag('consent', 'update', {ad_storage: 'granted', ad_user_data: 'granted', ad_personalization: 'granted', analytics_storage: 'granted'});
+    }
+  } catch (e) {}
+  var GA_ID = 'G-XXXXXXXXXX';
+  if (!/X{6}/.test(GA_ID)) {
+    var gs = document.createElement('script');
+    gs.async = true;
+    gs.src = 'https://www.googletagmanager.com/gtag/js?id=' + GA_ID;
+    document.head.appendChild(gs);
+    gtag('js', new Date());
+    gtag('config', GA_ID);
+  }
+  </script>
+
   <style>
 :root{
   --bg:#f5f2ec;
@@ -83,6 +107,17 @@ h1 .nw{white-space:nowrap}
 a:focus-visible,button:focus-visible,summary:focus-visible,input:focus-visible,textarea:focus-visible,select:focus-visible{outline:3px solid var(--accent);outline-offset:2px}
 @media(max-width:920px){.forstol{grid-template-columns:1fr;gap:28px}.steps{grid-template-columns:1fr 1fr}}
 @media(max-width:620px){.steps{grid-template-columns:1fr}.quote-form label.wide,.alt-contact{grid-column:span 1}}
+.cookie-bar{position:fixed;z-index:60;left:16px;right:16px;bottom:16px;max-width:760px;margin-inline:auto;display:flex;gap:18px;align-items:center;justify-content:space-between;background:#141414;color:#fff;border:1px solid rgba(255,255,255,.14);border-radius:14px;padding:16px 18px;box-shadow:0 12px 40px rgba(0,0,0,.35)}
+.cookie-bar[hidden]{display:none}
+.cookie-bar p{margin:0;font-size:14px;line-height:1.45;color:rgba(255,255,255,.85)}
+.cookie-bar p a{color:#fff;text-decoration:underline}
+.cookie-actions{display:flex;gap:8px;flex-shrink:0}
+.cookie-actions .btn{min-height:44px;padding:0 18px;font-size:15px;min-width:118px}
+.cookie-actions .reject{background:#fff;color:#111}
+.footer-links{margin-top:10px;font-size:14px}
+.footer-links a,.footer-links button{color:#aaa;text-decoration:underline;background:none;border:0;padding:0;font:inherit;cursor:pointer}
+.footer-links a:hover,.footer-links button:hover{color:#fff}
+@media(max-width:620px){.cookie-bar{flex-direction:column;align-items:stretch;left:10px;right:10px;bottom:10px;gap:12px}.cookie-actions .btn{flex:1}}
 @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}.btn{transition:none}}
 
 </style>
@@ -264,16 +299,25 @@ a:focus-visible,button:focus-visible,summary:focus-visible,input:focus-visible,t
 
   <footer>
     <div class="wrap footer-inner">
-      <div><strong>CNC GDAŃSK</strong><br><span>Frezowanie • cięcie • duży format</span><br><span>Tuchom 80-209 • NIP 5833282373</span></div>
+      <div><strong>CNC GDAŃSK</strong><br><span>Frezowanie • cięcie • duży format</span><br><span>Tuchom 80-209 • NIP 5833282373</span><div class="footer-links"><button type="button" id="cookieSettings">Ustawienia cookie</button></div></div>
       <div><a href="tel:+48577222845">+48 577 222 845</a><br><a href="mailto:kontakt@softstudiopl.eu">kontakt@softstudiopl.eu</a></div>
     </div>
   </footer>
+
+  <div id="cookieBar" class="cookie-bar" role="dialog" aria-label="Zgoda na pliki cookie" hidden>
+    <p>Używamy plików cookie Google do analizy ruchu i mierzenia skuteczności reklam. Strona działa tak samo bez względu na Twój wybór.</p>
+    <div class="cookie-actions">
+      <button type="button" class="btn reject" data-consent="denied">Odrzucam</button>
+      <button type="button" class="btn primary" data-consent="granted">Akceptuję</button>
+    </div>
+  </div>
 
   <script>
 const form = document.getElementById('quoteForm');
 form.addEventListener('submit', (e) => {
   e.preventDefault();
   const data = new FormData(form);
+  track('generate_lead', {lead_source: 'formularz_whatsapp', client_type: data.get('who') || 'nie podano'});
   const msg = [
     'Dzień dobry, proszę o wycenę CNC.',
     '',
@@ -287,6 +331,33 @@ form.addEventListener('submit', (e) => {
   ].join('\n');
   window.open(`https://wa.me/48577222845?text=${encodeURIComponent(msg)}`, '_blank', 'noopener');
 });
+
+function track(name, params) {
+  try { gtag('event', name, params || {}); } catch (e) {}
+}
+
+document.addEventListener('click', (e) => {
+  const a = e.target.closest('a');
+  if (!a) return;
+  const href = a.getAttribute('href') || '';
+  const sec = a.closest('header, footer, section');
+  const place = !sec ? 'strona' : sec.tagName === 'HEADER' ? 'naglowek' : sec.tagName === 'FOOTER' ? 'stopka' : (sec.id || sec.classList[0] || 'sekcja');
+  if (href.startsWith('tel:')) track('click_phone', {button_place: place});
+  else if (href.includes('wa.me')) track('click_whatsapp', {button_place: place});
+  else if (href.startsWith('mailto:')) track('click_email', {button_place: place});
+});
+
+const cookieBar = document.getElementById('cookieBar');
+function readConsent() { try { return localStorage.getItem('cnc_consent'); } catch (e) { return null; } }
+function saveConsent(v) {
+  try { localStorage.setItem('cnc_consent', v); } catch (e) {}
+  const g = v === 'granted' ? 'granted' : 'denied';
+  gtag('consent', 'update', {ad_storage: g, ad_user_data: g, ad_personalization: g, analytics_storage: g});
+  cookieBar.hidden = true;
+}
+if (!readConsent()) cookieBar.hidden = false;
+cookieBar.querySelectorAll('[data-consent]').forEach((b) => b.addEventListener('click', () => saveConsent(b.dataset.consent)));
+document.getElementById('cookieSettings').addEventListener('click', () => { cookieBar.hidden = false; });
 
 </script>
 </body>
