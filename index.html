@@ -349,10 +349,13 @@ document.addEventListener('click', (e) => {
 
 const cookieBar = document.getElementById('cookieBar');
 function readConsent() { try { return localStorage.getItem('cnc_consent'); } catch (e) { return null; } }
+let pageViewSent = readConsent() === 'granted';
 function saveConsent(v) {
-  try { localStorage.setItem('cnc_consent', v); } catch (e) {}
   const g = v === 'granted' ? 'granted' : 'denied';
+  const wasGranted = readConsent() === 'granted';
   gtag('consent', 'update', {ad_storage: g, ad_user_data: g, ad_personalization: g, analytics_storage: g});
+  if (g === 'granted' && !wasGranted && !pageViewSent) { gtag('event', 'page_view'); pageViewSent = true; }
+  try { localStorage.setItem('cnc_consent', v); } catch (e) {}
   cookieBar.hidden = true;
 }
 if (!readConsent()) cookieBar.hidden = false;
