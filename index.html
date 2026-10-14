@@ -103,7 +103,7 @@ h1 .nw{white-space:nowrap}
 .quote-form select{width:100%;font:inherit;border:1px solid #d8d3ca;border-radius:9px;padding:13px 14px;background:#fbfaf7}
 .quote-form label.wide{grid-column:span 2}
 .alt-contact{grid-column:span 2;text-align:center;margin:0;font-size:15px}
-.alt-contact a{color:var(--accent);font-weight:800;text-decoration:underline}
+.alt-contact a,.form-note a{color:var(--accent);font-weight:800;text-decoration:underline}
 a:focus-visible,button:focus-visible,summary:focus-visible,input:focus-visible,textarea:focus-visible,select:focus-visible{outline:3px solid var(--accent);outline-offset:2px}
 @media(max-width:920px){.forstol{grid-template-columns:1fr;gap:28px}.steps{grid-template-columns:1fr 1fr}}
 @media(max-width:620px){.steps{grid-template-columns:1fr}.quote-form label.wide,.alt-contact{grid-column:span 1}}
@@ -293,19 +293,20 @@ a:focus-visible,button:focus-visible,summary:focus-visible,input:focus-visible,t
         <button class="btn primary full" type="submit">Wyślij zapytanie przez WhatsApp</button>
         <p class="alt-contact">Wolisz e-mail z plikiem? <a href="mailto:kontakt@softstudiopl.eu?subject=Wycena%20CNC">Napisz do nas</a></p>
         <p class="form-note">Warsztat w Tuchomiu • Gdańsk, Gdynia, Sopot i całe Pomorze</p>
+        <p class="form-note">Informacje o przetwarzaniu danych: <a href="/polityka-prywatnosci.html">Polityka prywatności</a>. Wiadomość wyślesz dopiero w WhatsApp.</p>
       </form>
     </section>
   </main>
 
   <footer>
     <div class="wrap footer-inner">
-      <div><strong>CNC GDAŃSK</strong><br><span>Frezowanie • cięcie • duży format</span><br><span>Tuchom 80-209 • NIP 5833282373</span><div class="footer-links"><button type="button" id="cookieSettings">Ustawienia cookie</button></div></div>
+      <div><strong>CNC GDAŃSK</strong><br><span>Frezowanie • cięcie • duży format</span><br><span>Tuchom 80-209 • NIP 5833282373</span><div class="footer-links"><a href="/polityka-prywatnosci.html">Polityka prywatności</a><span aria-hidden="true"> · </span><button type="button" id="cookieSettings">Ustawienia cookie</button></div></div>
       <div><a href="tel:+48577222845">+48 577 222 845</a><br><a href="mailto:kontakt@softstudiopl.eu">kontakt@softstudiopl.eu</a></div>
     </div>
   </footer>
 
   <div id="cookieBar" class="cookie-bar" role="dialog" aria-label="Zgoda na pliki cookie" hidden>
-    <p>Używamy plików cookie Google do analizy ruchu i mierzenia skuteczności reklam. Strona działa tak samo bez względu na Twój wybór.</p>
+    <p>Korzystamy z Google Analytics do pomiaru ruchu i skuteczności reklam. Jeśli odmówisz, nie zapisujemy opcjonalnych plików cookie Google; mogą być wysyłane sygnały bez plików cookie. <a href="/polityka-prywatnosci.html" target="_blank" rel="noopener">Polityka prywatności</a>.</p>
     <div class="cookie-actions">
       <button type="button" class="btn reject" data-consent="denied">Odrzucam</button>
       <button type="button" class="btn primary" data-consent="granted">Akceptuję</button>
@@ -317,7 +318,6 @@ const form = document.getElementById('quoteForm');
 form.addEventListener('submit', (e) => {
   e.preventDefault();
   const data = new FormData(form);
-  track('generate_lead', {lead_source: 'formularz_whatsapp', client_type: data.get('who') || 'nie podano'});
   const msg = [
     'Dzień dobry, proszę o wycenę CNC.',
     '',
@@ -329,7 +329,12 @@ form.addEventListener('submit', (e) => {
     '',
     'Plik / zdjęcie dołączę w rozmowie.'
   ].join('\n');
-  window.open(`https://wa.me/48577222845?text=${encodeURIComponent(msg)}`, '_blank', 'noopener');
+  const whatsappUrl = `https://wa.me/48577222845?text=${encodeURIComponent(msg)}`;
+  // Mierzymy jedynie przejście do WhatsApp, nie potwierdzone otrzymanie zapytania.
+  track('click_whatsapp', {button_place: 'formularz_wycena', contact_method: 'whatsapp'});
+  const opened = window.open(whatsappUrl, '_blank');
+  if (opened) { opened.opener = null; }
+  else { window.location.assign(whatsappUrl); }
 });
 
 function track(name, params) {
@@ -349,12 +354,9 @@ document.addEventListener('click', (e) => {
 
 const cookieBar = document.getElementById('cookieBar');
 function readConsent() { try { return localStorage.getItem('cnc_consent'); } catch (e) { return null; } }
-let pageViewSent = readConsent() === 'granted';
 function saveConsent(v) {
   const g = v === 'granted' ? 'granted' : 'denied';
-  const wasGranted = readConsent() === 'granted';
   gtag('consent', 'update', {ad_storage: g, ad_user_data: g, ad_personalization: g, analytics_storage: g});
-  if (g === 'granted' && !wasGranted && !pageViewSent) { gtag('event', 'page_view'); pageViewSent = true; }
   try { localStorage.setItem('cnc_consent', v); } catch (e) {}
   cookieBar.hidden = true;
 }
