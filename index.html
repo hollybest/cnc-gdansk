@@ -128,6 +128,18 @@ a:focus-visible,button:focus-visible,summary:focus-visible,input:focus-visible,t
 @media(min-width:621px) and (max-width:920px){.main-nav{top:72px}}
 .brand{white-space:nowrap;margin-right:8px}
 @media(max-width:420px){.brand{font-size:15px;letter-spacing:.03em}.quick-contact{gap:6px}.quick-contact a{padding:8px 9px}.menu-btn{padding:8px 10px;margin-right:6px}}
+.mozl-intro{max-width:760px;color:var(--muted);font-size:18px}
+.mozl-intro a{color:var(--accent);font-weight:800;text-decoration:underline}
+.mozl-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-top:30px}
+.mozl-grid figure{margin:0;background:var(--paper);border:1px solid var(--line);border-radius:16px;overflow:hidden;display:flex;flex-direction:column}
+.alt .mozl-grid figure{background:var(--bg)}
+.mozl-grid img{aspect-ratio:4/5;object-fit:cover;width:100%;height:auto}
+.mozl-grid figcaption{padding:14px 16px 16px;display:grid;gap:4px;font-size:15px;color:var(--muted)}
+.mozl-grid figcaption b{font-size:16px;color:var(--ink)}
+.poglad{font-size:12px;color:#8a847c;letter-spacing:.02em}
+.mat-fig{margin:0}.mat-fig img{aspect-ratio:4/3;object-fit:cover;border-radius:18px;border:1px solid var(--line)}.mat-fig figcaption{margin-top:8px;text-align:right}
+@media(max-width:920px){.mozl-grid{grid-template-columns:1fr 1fr}}
+@media(max-width:620px){.mat-fig{order:-1}.mozl-grid{gap:10px}.mozl-grid figcaption{padding:10px 12px 12px;font-size:14px}}
 @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}.btn{transition:none}}
 
 </style>
@@ -224,7 +236,7 @@ a:focus-visible,button:focus-visible,summary:focus-visible,input:focus-visible,t
 
     <section class="gallery-section section alt" id="realizacje">
       <div class="wrap">
-        <p class="section-kicker">MOŻLIWOŚCI I REALIZACJE</p>
+        <p class="section-kicker">NASZE REALIZACJE</p>
         <h2>Od dużych formatów po detal</h2>
         <div class="gallery">
           <figure class="wide"><img src="images/warsztat-frezarka.webp" width="1000" height="563" decoding="async" alt="Duże pole robocze frezarki CNC" loading="lazy"></figure>
@@ -243,7 +255,21 @@ a:focus-visible,button:focus-visible,summary:focus-visible,input:focus-visible,t
           <span>MDF</span><span>HDF</span><span>sklejka</span><span>drewno</span><span>płyty meblowe</span><span>HPL</span><span>PVC</span><span>Plexi / PMMA</span><span>kompozyty</span>
         </div>
       </div>
-      <img src="images/materialy.webp" width="1000" height="667" decoding="async" alt="Materiały do obróbki CNC" loading="lazy">
+      <figure class="mat-fig"><img src="images/mozliwosci-plyty.webp" width="1000" height="1500" decoding="async" alt="Płyty sklejki i płyty meblowe do obróbki CNC" loading="lazy"><figcaption class="poglad">zdjęcie poglądowe</figcaption></figure>
+    </section>
+
+    <section class="section alt" id="mozliwosci">
+      <div class="wrap">
+        <p class="section-kicker">MOŻLIWOŚCI MASZYNY</p>
+        <h2>Co można wykonać na frezarce CNC</h2>
+        <p class="mozl-intro">Przykłady prac, które wykonuje frezarka CNC tego typu. Są to zdjęcia poglądowe — nasze realizacje znajdziesz w sekcji <a href="#realizacje">Realizacje</a>.</p>
+        <div class="mozl-grid">
+          <figure><img src="images/mozliwosci-frezowanie.webp" width="1400" height="934" decoding="async" loading="lazy" alt="Frezowanie wzoru w drewnie frezem CNC"><figcaption><b>Frezowanie wzorów</b>Ozdobne frezowania i fazowania na płytach i drewnie.<span class="poglad">zdjęcie poglądowe</span></figcaption></figure>
+          <figure><img src="images/mozliwosci-wrzeciono.webp" width="1000" height="1500" decoding="async" loading="lazy" alt="Wrzeciono frezarki CNC nad płytą drewnianą"><figcaption><b>Precyzyjna obróbka</b>Kontury, wpusty i otwory według pliku DXF lub DWG.<span class="poglad">zdjęcie poglądowe</span></figcaption></figure>
+          <figure><img src="images/mozliwosci-elementy-sklejka.webp" width="1000" height="1500" decoding="async" loading="lazy" alt="Wycięte elementy meblowe ze sklejki z otworami"><figcaption><b>Elementy meblowe na wymiar</b>Formatki z otworami i wpustami — pojedynczo i seryjnie.<span class="poglad">zdjęcie poglądowe</span></figcaption></figure>
+          <figure><img src="images/mozliwosci-lamele-hol.webp" width="1200" height="860" decoding="async" loading="lazy" alt="Lamele drewniane na ścianie w holu"><figcaption><b>Lamele i panele ścienne</b>Do biur, hoteli i przestrzeni publicznych.<span class="poglad">zdjęcie poglądowe</span></figcaption></figure>
+        </div>
+      </div>
     </section>
 
     <section class="b2b section">

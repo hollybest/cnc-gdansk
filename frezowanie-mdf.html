@@ -128,6 +128,18 @@ a:focus-visible,button:focus-visible,summary:focus-visible,input:focus-visible,t
 @media(min-width:621px) and (max-width:920px){.main-nav{top:72px}}
 .brand{white-space:nowrap;margin-right:8px}
 @media(max-width:420px){.brand{font-size:15px;letter-spacing:.03em}.quick-contact{gap:6px}.quick-contact a{padding:8px 9px}.menu-btn{padding:8px 10px;margin-right:6px}}
+.mozl-intro{max-width:760px;color:var(--muted);font-size:18px}
+.mozl-intro a{color:var(--accent);font-weight:800;text-decoration:underline}
+.mozl-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-top:30px}
+.mozl-grid figure{margin:0;background:var(--paper);border:1px solid var(--line);border-radius:16px;overflow:hidden;display:flex;flex-direction:column}
+.alt .mozl-grid figure{background:var(--bg)}
+.mozl-grid img{aspect-ratio:4/5;object-fit:cover;width:100%;height:auto}
+.mozl-grid figcaption{padding:14px 16px 16px;display:grid;gap:4px;font-size:15px;color:var(--muted)}
+.mozl-grid figcaption b{font-size:16px;color:var(--ink)}
+.poglad{font-size:12px;color:#8a847c;letter-spacing:.02em}
+.mat-fig{margin:0}.mat-fig img{aspect-ratio:4/3;object-fit:cover;border-radius:18px;border:1px solid var(--line)}.mat-fig figcaption{margin-top:8px;text-align:right}
+@media(max-width:920px){.mozl-grid{grid-template-columns:1fr 1fr}}
+@media(max-width:620px){.mat-fig{order:-1}.mozl-grid{gap:10px}.mozl-grid figcaption{padding:10px 12px 12px;font-size:14px}}
 @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}.btn{transition:none}}
 
 </style>
@@ -172,6 +184,20 @@ a:focus-visible,button:focus-visible,summary:focus-visible,input:focus-visible,t
           <article class="card"><span>02</span><h3>Elementy mebli i formatki</h3><p>Boki, półki, wieńce, drzwi i zestawy do montażu — według Waszego pliku, w powtarzalnych seriach.</p></article>
           <article class="card"><span>03</span><h3>Długie elementy bez łączeń</h3><p>Blaty, panele, fronty i listwy do 4200 mm z jednego arkusza — tam, gdzie kończy się standardowa maszyna.</p></article>
           <article class="card"><span>04</span><h3>Panele i lamele dekoracyjne</h3><p>Panele, lamele i ażury z MDF do wnętrz — na wymiar, także w dużym formacie.</p></article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="mozliwosci">
+      <div class="wrap">
+        <p class="section-kicker">MOŻLIWOŚCI MASZYNY</p>
+        <h2>Co można wykonać na frezarce CNC</h2>
+        <p class="mozl-intro">Przykłady elementów, które wykonuje frezarka CNC z MDF i płyt meblowych. Są to zdjęcia poglądowe — nasze realizacje znajdziesz na <a href="/#realizacje">stronie głównej</a>.</p>
+        <div class="mozl-grid">
+          <figure><img src="images/mozliwosci-fronty.webp" width="1000" height="1175" decoding="async" loading="lazy" alt="Kuchnia z matowymi frontami meblowymi"><figcaption><b>Fronty meblowe</b>Fronty szafek kuchennych i zabudów na wymiar.<span class="poglad">zdjęcie poglądowe</span></figcaption></figure>
+          <figure><img src="images/mozliwosci-elementy-sklejka.webp" width="1000" height="1500" decoding="async" loading="lazy" alt="Wycięte elementy meblowe ze sklejki z otworami"><figcaption><b>Elementy meblowe na wymiar</b>Formatki z otworami i wpustami — pojedynczo i seryjnie.<span class="poglad">zdjęcie poglądowe</span></figcaption></figure>
+          <figure><img src="images/mozliwosci-lamele-kawiarnia.webp" width="1000" height="1500" decoding="async" loading="lazy" alt="Lamele dekoracyjne na ścianie w restauracji"><figcaption><b>Lamele dekoracyjne</b>Ściany w restauracjach, kawiarniach i biurach.<span class="poglad">zdjęcie poglądowe</span></figcaption></figure>
+          <figure><img src="images/mozliwosci-frezowanie.webp" width="1400" height="934" decoding="async" loading="lazy" alt="Frezowanie wzoru w drewnie frezem CNC"><figcaption><b>Frezowanie wzorów</b>Ozdobne frezowania i fazowania na płytach i drewnie.<span class="poglad">zdjęcie poglądowe</span></figcaption></figure>
         </div>
       </div>
     </section>
