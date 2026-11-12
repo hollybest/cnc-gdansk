@@ -119,6 +119,15 @@ a:focus-visible,button:focus-visible,summary:focus-visible,input:focus-visible,t
 .footer-links a,.footer-links button{color:#aaa;text-decoration:underline;background:none;border:0;padding:0;font:inherit;cursor:pointer}
 .footer-links a:hover,.footer-links button:hover{color:#fff}
 @media(max-width:620px){.cookie-bar{flex-direction:column;align-items:stretch;left:10px;right:10px;bottom:10px;gap:12px}.cookie-actions .btn{flex:1}}
+.main-nav{display:flex;gap:4px;align-items:center;margin-left:auto;margin-right:18px}
+.main-nav a{padding:9px 12px;border-radius:8px;font-weight:700;font-size:15px;color:rgba(255,255,255,.82)}
+.main-nav a:hover,.main-nav a[aria-current="page"]{color:#fff;background:rgba(255,255,255,.1)}
+.menu-btn{display:none;background:transparent;color:#fff;border:1px solid rgba(255,255,255,.25);border-radius:999px;padding:8px 12px;font:700 12px/1 inherit;font-family:inherit;cursor:pointer;margin-left:auto;margin-right:8px}
+@media(max-width:920px){.main-nav{display:none;position:fixed;top:64px;left:0;right:0;flex-direction:column;align-items:stretch;gap:0;margin:0;padding:8px 14px 14px;background:#0f0f0f;box-shadow:0 18px 30px rgba(0,0,0,.45);border-bottom:1px solid rgba(255,255,255,.12)}
+.main-nav.open{display:flex}.main-nav a{padding:14px 10px;font-size:17px;border-bottom:1px solid rgba(255,255,255,.08);border-radius:0}.main-nav a:last-child{border-bottom:0}.menu-btn{display:inline-flex}}
+@media(min-width:621px) and (max-width:920px){.main-nav{top:72px}}
+.brand{white-space:nowrap;margin-right:8px}
+@media(max-width:420px){.brand{font-size:15px;letter-spacing:.03em}.quick-contact{gap:6px}.quick-contact a{padding:8px 9px}.menu-btn{padding:8px 10px;margin-right:6px}}
 @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}.btn{transition:none}}
 
 </style>
@@ -126,6 +135,8 @@ a:focus-visible,button:focus-visible,summary:focus-visible,input:focus-visible,t
 <body>
   <header class="topbar">
     <a class="brand" href="#start" aria-label="CNC Gdańsk">CNC <span>GDAŃSK</span></a>
+    <button class="menu-btn" type="button" id="menuBtn" aria-expanded="false" aria-controls="mainNav">Menu</button>
+    <nav class="main-nav" id="mainNav" aria-label="Menu główne"><a href="/" aria-current="page">Oferta CNC</a><a href="/frezowanie-mdf.html">Frezowanie MDF</a><a href="#realizacje">Realizacje</a><a href="#wycena">Wycena</a></nav>
     <nav class="quick-contact" aria-label="Szybki kontakt">
       <a href="tel:+48577222845">Zadzwoń</a>
       <a class="wa" href="https://wa.me/48577222845?text=Dzie%C5%84%20dobry%2C%20prosz%C4%99%20o%20wycen%C4%99%20CNC." target="_blank" rel="noopener">WhatsApp</a>
@@ -363,6 +374,9 @@ function saveConsent(v) {
 }
 if (!readConsent()) cookieBar.hidden = false;
 cookieBar.querySelectorAll('[data-consent]').forEach((b) => b.addEventListener('click', () => saveConsent(b.dataset.consent)));
+const menuBtn = document.getElementById('menuBtn'), mainNav = document.getElementById('mainNav');
+menuBtn.addEventListener('click', () => { const o = mainNav.classList.toggle('open'); menuBtn.setAttribute('aria-expanded', o ? 'true' : 'false'); menuBtn.textContent = o ? '✕' : 'Menu'; });
+mainNav.addEventListener('click', (e) => { if (e.target.closest('a')) { mainNav.classList.remove('open'); menuBtn.setAttribute('aria-expanded','false'); menuBtn.textContent = 'Menu'; } });
 document.getElementById('cookieSettings').addEventListener('click', () => { cookieBar.hidden = false; });
 
 </script>
